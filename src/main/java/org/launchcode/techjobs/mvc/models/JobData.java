@@ -36,7 +36,9 @@ public class JobData {
     public static ArrayList<Job> findAll() {
 
         // load data, if not already loaded
-        loadData();
+        if (!isDataLoaded) {
+            loadData();
+        }
 
         // Bonus mission; normal version returns allJobs
         return new ArrayList<>(allJobs);
@@ -55,7 +57,9 @@ public class JobData {
     public static ArrayList<Job> findByColumnAndValue(String column, String value) {
 
         // load data, if not already loaded
-        loadData();
+        if (!isDataLoaded) {
+            loadData();
+        }
 
         ArrayList<Job> jobs = new ArrayList<>();
 
@@ -104,7 +108,9 @@ public class JobData {
     public static ArrayList<Job> findByValue(String value) {
 
         // load data, if not already loaded
-        loadData();
+        if (!isDataLoaded) {
+            loadData();
+        }
 
         ArrayList<Job> jobs = new ArrayList<>();
 
