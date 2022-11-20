@@ -1,9 +1,16 @@
 package org.launchcode.techjobs.mvc.controllers;
 
+import org.launchcode.techjobs.mvc.models.Job;
+import org.launchcode.techjobs.mvc.models.JobData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.launchcode.techjobs.mvc.controllers.ListController.columnChoices;
 
@@ -23,16 +30,27 @@ public class SearchController {
 
     // TODO #3 - Create a handler to process a search request and render the updated search view.
     
-//    @PostMapping(value = "")
-//    public String displaySearchResults(Model model, @RequestParam String id, @RequestParam(required = false) String searchTerm) {
-//        ArrayList<Job> jobs;
-//        if (id.equals("all")) {
-//            jobs = JobData.findAll();
-//        } else {
-//            jobs = JobData.
-//        }
-//        model.addAttribute("title", "Jobs with " + id.get(column) + ": " + value);
-//        model.addAttribute("jobs", jobs);
-//        return "results";
-//    }
+    @PostMapping(value = "results")
+    public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam(required = false) String searchTerm) {
+        ArrayList<Job> jobs = new ArrayList<>();
+        model.addAttribute("columns", columnChoices);
+        if (searchTerm.isEmpty() || searchTerm.equalsIgnoreCase("all")) {
+            jobs = JobData.findAll();
+        } else {
+            if (searchType.equals("positionType")) {
+                jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+            } else if (searchType.equals("employer")) {
+                jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+            } else if (searchType.equals("coreCompetency")) {
+                jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+            } else if (searchType.equals("location")) {
+                jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+            } else if (searchType.equals("all")) {
+                jobs = JobData.findByValue(searchTerm);
+            }
+        }
+        model.addAttribute("title", "Jobs with " + searchType + ": " + searchTerm);
+        model.addAttribute("jobs", jobs);
+        return "/results";
+    }
 }
