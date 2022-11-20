@@ -39,17 +39,7 @@ public class SearchController {
         if (searchTerm.isEmpty() || searchTerm.equalsIgnoreCase("all")) {
             jobs = JobData.findAll();
         } else {
-            if (searchType.equals("positionType")) {
-                jobs = JobData.findByColumnAndValue(searchType, searchTerm);
-            } else if (searchType.equals("employer")) {
-                jobs = JobData.findByColumnAndValue(searchType, searchTerm);
-            } else if (searchType.equals("coreCompetency")) {
-                jobs = JobData.findByColumnAndValue(searchType, searchTerm);
-            } else if (searchType.equals("location")) {
-                jobs = JobData.findByColumnAndValue(searchType, searchTerm);
-            } else if (searchType.equals("all")) {
-                jobs = JobData.findByValue(searchTerm);
-            }
+            jobs = JobData.findByColumnAndValue(searchType, searchTerm);
         }
         model.addAttribute("jobs", jobs);
         return "/results";
